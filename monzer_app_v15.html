@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
@@ -962,35 +962,4 @@ document.addEventListener('click', function(e){
     var csvCell=function(x){return '"'+String(x==null?'':x).replace(/"/g,'""')+'"';};
     var csv = "\uFEFFالتاريخ,النوع,التفاصيل\r\n";
     Object.keys(S.att).sort().forEach(function(k){ csv += [k,'حضور وانصراف','حضور: '+(S.att[k].in||'')+' | انصراف: '+(S.att[k].out||'')].map(csvCell).join(',')+"\r\n"; });
-    S.leaves.forEach(function(l){ csv += [l.date,'إجازة '+NAMES[l.type],l.days+' يوم'].map(csvCell).join(',')+"\r\n"; });
-    S.ot.forEach(function(o){csv += [o.date,'سهر إضافي',o.from+'–'+o.to+' ('+otHours(o)+' ساعة) '+money(otPay(o))].map(csvCell).join(',')+"\r\n";});
-    S.work.forEach(function(w){csv += [w.date,w.kind==='holiday'?'عمل عطلة رسمية':'عمل راحة أسبوعية',money(w.customPay||(w.kind==='holiday'?2*dailyRate():dailyRate()))].map(csvCell).join(',')+"\r\n";});
-    S.shifts.forEach(function(x){csv += [x.date,'وردية '+(x.type==='night'?'ليلية':'وسطى'),x.in+'–'+x.out+' '+money(x.rate)].map(csvCell).join(',')+"\r\n";});
-    S.ramadanAtt.forEach(function(x){csv += [x.date,'دوام رمضان',x.in+'–'+x.out].map(csvCell).join(',')+"\r\n";});
-    S.ramadanOt.forEach(function(x){csv += [x.date,'سهر رمضان',x.from+'–'+x.to+' '+money(x.otRate)].map(csvCell).join(',')+"\r\n";});
-    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-    var aLink = document.createElement('a');
-    aLink.href = URL.createObjectURL(blob);
-    aLink.download = 'monzer_app_report_' + ds(new Date()) + '.csv';
-    aLink.click();
-  }
-  else if(a === 'rs'){
-    try {
-      var ob = JSON.parse(V('bkt'));
-      if(!ob || typeof ob !== 'object' || Array.isArray(ob) || !ob.att || typeof ob.att !== 'object') throw 0;
-      S = normalizeState(ob);
-      alert('تم استرجاع البيانات بنجاح ✅');
-    } catch(x) {
-      document.getElementById('bkm').textContent = 'النص المدخل غير صحيح، تأكد من نسخه بالكامل';
-      return;
-    }
-  }
-
-  save();
-  render();
-});
-
-render();
-</script>
-</body>
-</html>
+    S.leaves.forEach(function(l){ csv += [l.date,'إجازة '+NAMES[l.type],l.days+' يوم'].map(csvCell).join
