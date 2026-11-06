@@ -1,0 +1,996 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f766e">
+<title>Monzer App - مُنذِر (v15 Smart Local)</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%232dd4bf'/%3E%3Cstop offset='1' stop-color='%230f766e'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='512' height='512' rx='120' fill='url(%23g)'/%3E%3Ccircle cx='256' cy='262' r='140' fill='none' stroke='white' stroke-width='30'/%3E%3Cpath d='M256 176v90l62 40' fill='none' stroke='white' stroke-width='30' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='380' cy='132' r='42' fill='%23fbbf24' stroke='%230f766e' stroke-width='14'/%3E%3C/svg%3E">
+<style>
+:root{
+  --bg:#f8fafc;--card:#ffffff;--tx:#0f172a;--mu:#64748b;--pr:#0f766e;--pr-hover:#115e59;--prt:#ffffff;
+  --bd:#e2e8f0;--wr:#dc2626;--wb:#fef2f2;--ok:#16a34a;--okb:#f0fdf4;--info:#2563eb;--infob:#eff6ff;
+  --shadow:0 4px 12px -2px rgba(0,0,0,0.05), 0 2px 6px -1px rgba(0,0,0,0.03);
+  box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f172a;--card:#1e293b;--tx:#f8fafc;--mu:#94a3b8;--pr:#2dd4bf;--pr-hover:#14b8a6;--prt:#0f172a;
+    --bd:#334155;--wr:#f87171;--wb:#451a1a;--ok:#4ade80;--okb:#143823;--info:#60a5fa;--infob:#1e293b;
+    --shadow:0 4px 14px -2px rgba(0,0,0,0.3)
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f172a;--card:#1e293b;--tx:#f8fafc;--mu:#94a3b8;--pr:#2dd4bf;--pr-hover:#14b8a6;--prt:#0f172a;
+  --bd:#334155;--wr:#f87171;--wb:#451a1a;--ok:#4ade80;--okb:#143823;--info:#60a5fa;--infob:#1e293b;
+  --shadow:0 4px 14px -2px rgba(0,0,0,0.3)
+}
+*{box-sizing:border-box;transition:background-color .2s,border-color .2s}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;font-size:16px;-webkit-tap-highlight-color:transparent}
+main{padding:16px 14px 100px;max-width:640px;margin:auto}
+.brand-header{display:flex;align-items:center;justify-content:space-between;margin:0 0 16px}
+.brand{display:flex;align-items:center;gap:12px}
+.brand svg{width:44px;height:44px;border-radius:12px;filter:drop-shadow(0 2px 6px rgba(0,0,0,0.15))}
+.brand b{font-size:22px;letter-spacing:.3px;color:var(--tx)}
+.theme-toggle{background:transparent;border:1px solid var(--bd);width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--tx);margin:0}
+h1{font-size:22px;margin:4px 0 2px;font-weight:800}
+h2{font-size:16px;margin:0 0 12px;display:flex;align-items:center;gap:6px;color:var(--tx)}
+.sub{color:var(--mu);font-size:13px;margin-bottom:12px;line-height:1.4}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px;margin-bottom:14px;box-shadow:var(--shadow)}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.row>*{flex:1;min-width:130px}
+label{display:block;font-size:13px;color:var(--mu);margin:10px 0 4px;font-weight:600}
+input,select,textarea{width:100%;padding:12px;border:1px solid var(--bd);border-radius:10px;background:var(--bg);color:var(--tx);font:inherit;outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--pr);box-shadow:0 0 0 3px rgba(45,212,191,0.15)}
+button{font:inherit;border:0;border-radius:12px;padding:13px 16px;background:var(--pr);color:var(--prt);font-weight:700;width:100%;margin-top:12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+button:active{transform:scale(0.98)}
+button.sec{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+button.x{width:auto;margin:0;padding:6px 12px;background:transparent;color:var(--wr);border:1px solid var(--bd);font-size:13px;font-weight:500}
+.big{font-size:24px;font-weight:800;color:var(--pr)}
+.warn{background:var(--wb);color:var(--wr);border:1px solid var(--wr);border-radius:14px;padding:14px;margin-bottom:14px;font-weight:700;display:flex;align-items:flex-start;gap:10px;line-height:1.4}
+.bd{display:inline-block;font-size:11px;padding:3px 9px;border-radius:99px;font-weight:700}
+.bd.w{background:var(--wb);color:var(--wr)}
+.bd.o{background:var(--okb);color:var(--ok)}
+.bd.i{background:var(--infob);color:var(--info)}
+.li{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-top:1px solid var(--bd);font-size:14px}
+.li:first-of-type{border-top:0}
+.kv{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14px;border-bottom:1px dashed var(--bd)}
+.kv:last-child{border-bottom:0}
+.kv b{font-weight:700}
+.bar{height:10px;background:var(--bd);border-radius:10px;overflow:hidden;margin:6px 0 12px}
+.bar i{display:block;height:100%;background:var(--pr);border-radius:10px;transition:width 0.4s ease}
+nav{position:fixed;bottom:0;left:0;right:0;display:flex;background:var(--card);border-top:1px solid var(--bd);padding-bottom:env(safe-area-inset-bottom,0px);z-index:100;box-shadow:0 -4px 12px rgba(0,0,0,0.05)}
+nav a{flex:1;text-align:center;padding:10px 2px 6px;font-size:10px;color:var(--mu);cursor:pointer;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:2px}
+nav a span{font-size:18px;line-height:1}
+nav a.on{color:var(--pr);font-weight:800}
+.empty{color:var(--mu);font-size:14px;padding:12px 0;text-align:center}
+</style>
+</head>
+<body>
+<main id="app"></main>
+<nav id="nav"></nav>
+
+<script>
+var KEY = 'monzer_app_v14'; // keep the established key so existing local data is preserved
+var S = {
+  email: '',
+  salary: 0,
+  basicSalary: 0,
+  profitMonths: 0,
+  theme: 'auto',
+  att: {},
+  leaves: [],
+  ot: [],
+  work: [],
+  shifts: [],
+  ramadanAtt: [],
+  ramadanOt: [],
+  shiftRates: { mid: 0, night: 0 },
+  ramadanOtRate: 0,
+  customHourlyRate: 0,
+  taxBracketChoice: 'auto',
+  quota: { annual: 30, casual: 7, sick: 10 },
+  manualRepEarned: 0,
+  manualRepDeducted: 0,
+  workRules: { inMax: '07:50', outMin: '15:50', weekendMode: 'fri_sat' }
+};
+
+try {
+  var saved = localStorage.getItem(KEY);
+  if (saved) S = Object.assign(S, JSON.parse(saved));
+  if (!S.shifts) S.shifts = [];
+  if (!S.ramadanAtt) S.ramadanAtt = [];
+  if (!S.ramadanOt) S.ramadanOt = [];
+  if (!S.shiftRates) S.shiftRates = { mid: 0, night: 0 };
+} catch(e) {}
+
+function isDateValue(v){
+  if(typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
+  var p=v.split('-').map(Number), d=new Date(p[0],p[1]-1,p[2],12);
+  return d.getFullYear()===p[0] && d.getMonth()===p[1]-1 && d.getDate()===p[2];
+}
+function isTimeValue(v){ return typeof v==='string' && /^(?:[01]\d|2[0-3]):[0-5]\d$/.test(v); }
+function nonNegative(v, fallback){ var n=Number(v); return Number.isFinite(n) && n>=0 && n<=1000000000 ? n : fallback; }
+function safeId(v, fallback){ var n=Number(v); return Number.isSafeInteger(n) && n>=0 ? n : fallback; }
+function normalizeState(raw){
+  var d={email:'',salary:0,basicSalary:0,profitMonths:0,theme:'auto',att:{},leaves:[],ot:[],work:[],shifts:[],ramadanAtt:[],ramadanOt:[],shiftRates:{mid:0,night:0},ramadanOtRate:0,customHourlyRate:0,taxBracketChoice:'auto',quota:{annual:30,casual:7,sick:10},manualRepEarned:0,manualRepDeducted:0,workRules:{inMax:'07:50',outMin:'15:50',weekendMode:'fri_sat'}};
+  raw=raw && typeof raw==='object' && !Array.isArray(raw) ? raw : {};
+  var out=Object.assign({},d);
+  ['salary','basicSalary','profitMonths','ramadanOtRate','customHourlyRate','manualRepEarned','manualRepDeducted'].forEach(function(k){out[k]=nonNegative(raw[k],d[k]);});
+  out.email=(typeof raw.email==='string' && raw.email.length<=254 && /^[^\s<>"']+@[^\s<>"']+\.[^\s<>"']+$/.test(raw.email))?raw.email:'';
+  out.theme=['auto','dark','light'].indexOf(raw.theme)>=0?raw.theme:'auto';
+  out.taxBracketChoice=['auto','0','10','15','20','22.5','25','27.5'].indexOf(String(raw.taxBracketChoice))>=0?String(raw.taxBracketChoice):'auto';
+  out.quota={annual:nonNegative(raw.quota&&raw.quota.annual,30),casual:nonNegative(raw.quota&&raw.quota.casual,7),sick:nonNegative(raw.quota&&raw.quota.sick,10)};
+  out.shiftRates={mid:nonNegative(raw.shiftRates&&raw.shiftRates.mid,0),night:nonNegative(raw.shiftRates&&raw.shiftRates.night,0)};
+  var wr=raw.workRules&&typeof raw.workRules==='object'?raw.workRules:{};
+  out.workRules={inMax:isTimeValue(wr.inMax)?wr.inMax:'07:50',outMin:isTimeValue(wr.outMin)?wr.outMin:'15:50',weekendMode:['fri_sat','sat_sun','fri','sat','none'].indexOf(wr.weekendMode)>=0?wr.weekendMode:'fri_sat'};
+  var att=raw.att&&typeof raw.att==='object'&&!Array.isArray(raw.att)?raw.att:{};
+  Object.keys(att).forEach(function(k){var r=att[k]||{};if(isDateValue(k))out.att[k]={in:isTimeValue(r.in)?r.in:'',out:isTimeValue(r.out)?r.out:''};});
+  var arr=function(v){return Array.isArray(v)?v:[];};
+  out.leaves=arr(raw.leaves).filter(function(x){return x&&isDateValue(x.date)&&['annual','casual','sick','replacement'].indexOf(x.type)>=0&&nonNegative(x.days,0)>0;}).map(function(x,i){return{id:safeId(x.id,i+1),gid:safeId(x.gid,safeId(x.id,i+1)),date:x.date,type:x.type,days:Math.min(365,nonNegative(x.days,0))};});
+  out.ot=arr(raw.ot).filter(function(x){return x&&isDateValue(x.date)&&isTimeValue(x.from)&&isTimeValue(x.to);}).map(function(x,i){return{id:safeId(x.id,i+1),date:x.date,from:x.from,to:x.to,customPay:nonNegative(x.customPay,0)};});
+  out.work=arr(raw.work).filter(function(x){return x&&isDateValue(x.date)&&['weekend','holiday'].indexOf(x.kind)>=0;}).map(function(x,i){return{id:safeId(x.id,i+1),date:x.date,kind:x.kind,customPay:nonNegative(x.customPay,0)};});
+  out.shifts=arr(raw.shifts).filter(function(x){return x&&isDateValue(x.date)&&['mid','night'].indexOf(x.type)>=0&&isTimeValue(x.in)&&isTimeValue(x.out);}).map(function(x,i){return{id:safeId(x.id,i+1),date:x.date,type:x.type,in:x.in,out:x.out,rate:nonNegative(x.rate,0)};});
+  out.ramadanAtt=arr(raw.ramadanAtt).filter(function(x){return x&&isDateValue(x.date)&&isTimeValue(x.in)&&isTimeValue(x.out);}).map(function(x,i){return{id:safeId(x.id,i+1),date:x.date,in:x.in,out:x.out};});
+  out.ramadanOt=arr(raw.ramadanOt).filter(function(x){return x&&isDateValue(x.date)&&isTimeValue(x.from)&&isTimeValue(x.to);}).map(function(x,i){return{id:safeId(x.id,i+1),date:x.date,from:x.from,to:x.to,otRate:nonNegative(x.otRate,0)};});
+  if(typeof raw._ym==='string' && /^\d{4}-(0[1-9]|1[0-2])$/.test(raw._ym))out._ym=raw._ym;
+  return out;
+}
+S=normalizeState(S);
+
+function save() {
+  try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e) {}
+}
+
+var p2 = function(n){ return String(n).padStart(2,'0'); };
+var ds = function(d){ return d.getFullYear()+'-'+p2(d.getMonth()+1)+'-'+p2(d.getDate()); };
+var ts = function(d){ return p2(d.getHours())+':'+p2(d.getMinutes()); };
+var mins = function(t){ if(!t) return 0; var a=t.split(':'); return +a[0]*60 + +a[1]; };
+var V = function(id){ var e=document.getElementById(id); return e?e.value:''; };
+var NAMES = { annual:'سنوية', casual:'عارضة', sick:'مرضية', replacement:'بدل' };
+var IN_MAX = '07:50', OUT_MIN = '15:50';
+function workRules(){ return S.workRules || {inMax:IN_MAX,outMin:OUT_MIN,weekendMode:'fri_sat'}; }
+function isRestDay(day){ var m=workRules().weekendMode; return m==='fri_sat'?(day===5||day===6):m==='sat_sun'?(day===6||day===0):m==='fri'?day===5:m==='sat'?day===6:false; }
+function icalDays(){ return ['SU','MO','TU','WE','TH','FR','SA'].filter(function(_,i){return !isRestDay(i);}).join(','); }
+function nextWorkday(){ var d=new Date();d.setHours(12,0,0,0);while(isRestDay(d.getDay()))d.setDate(d.getDate()+1);return ds(d); }
+function esc(v){ return String(v==null?'':v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];}); }
+function validDateInput(v){ return isDateValue(v); }
+function uniqueDate(list,date,kind){ return !list.some(function(x){return x.date===date&&(!kind||x.kind===kind);}); }
+
+var TABS = [
+  ['today', '🕗', 'الحضور'],
+  ['leave', '🏖️', 'الإجازات'],
+  ['work', '⏱️', 'الإضافي والسهر'],
+  ['weekends', '📅', 'أيام البدل'],
+  ['shift', '🔄', 'الورديات'],
+  ['rep', '📊', 'التقرير'],
+  ['settings', '⚙️', 'الإعدادات']
+];
+
+var tab = 'today';
+
+function Q(k){ return S.quota && S.quota[k] !== undefined ? +S.quota[k] : {annual:30, casual:7, sick:10, replacement:0}[k]; }
+
+function qTotal(y, q){
+  return S.leaves.filter(function(l){
+    return l.type !== 'replacement' && +l.date.slice(0,4) === y && Math.floor((+l.date.slice(5,7)-1)/3) === q;
+  }).reduce(function(a,l){ return a + l.days; }, 0);
+}
+
+function mTotal(ym, t){
+  return S.leaves.filter(function(l){
+    return l.date.slice(0,7) === ym && (!t || l.type === t);
+  }).reduce(function(a,l){ return a + l.days; }, 0);
+}
+
+function used(y, t){
+  return S.leaves.filter(function(l){
+    return +l.date.slice(0,4) === y && l.type === t;
+  }).reduce(function(a,l){ return a + l.days; }, 0);
+}
+
+function totalReplacementEarned(){ return S.work.filter(function(w){ return w.kind === 'weekend'; }).length; }
+function replacementBalance(){
+  var earned = totalReplacementEarned() + (S.manualRepEarned || 0);
+  var taken = S.leaves.filter(function(l){ return l.type === 'replacement'; }).reduce(function(a,l){ return a + l.days; }, 0) + (S.manualRepDeducted || 0);
+  return Math.max(0, earned - taken);
+}
+
+function qLabel(q){ return 'الربع '+(q+1)+' ('+['يناير–مارس','أبريل–يونيو','يوليو–سبتمبر','أكتوبر–ديسمبر'][q]+')'; }
+function hourlyRate(){ return S.customHourlyRate > 0 ? S.customHourlyRate : ((+S.salary || 0) / 240); }
+function dailyRate(){ return (+S.salary || 0) / 30; }
+
+function otHours(o){
+  if(!o || !isTimeValue(o.from) || !isTimeValue(o.to)) return 0;
+  var delta=mins(o.to)-mins(o.from);
+  if(delta<0) delta+=1440;
+  return Math.round(delta/60*100)/100;
+}
+
+function otPay(o){
+  if (o.customPay > 0) return o.customPay;
+  var hrs = otHours(o);
+  var hr = hourlyRate();
+  return hrs * hr;
+}
+
+function money(n){ return Math.round(n || 0).toLocaleString('ar-EG') + ' ج.م'; }
+
+function banner(){
+  var n = new Date(), y = n.getFullYear(), q = Math.floor(n.getMonth()/3), t = qTotal(y, q);
+  if (t > 9) {
+    return '<div class="warn">⚠️ <span><b>تنبيه هام (الربع سنوي):</b> إجمالي الإجازات في '+qLabel(q)+' هو <b>'+t+' أيام</b> (يزيد عن 9 أيام). الإجازات البدل غير محسوبة.</span></div>';
+  }
+  return '';
+}
+
+function dayName(d){
+  return new Date(d+'T12:00:00').toLocaleDateString('ar-EG', { weekday:'long', day:'numeric', month:'long' });
+}
+
+function vToday(){
+  var n = new Date(), d = ds(n), r = S.att[d] || {};
+  var late = r.in && mins(r.in) > mins(workRules().inMax);
+  var early = r.out && mins(r.out) < mins(workRules().outMin);
+  
+  var h = '<h1>Monzer App - تسجيل الحضور والوقت</h1><div class="sub">'+n.toLocaleDateString('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'</div>'+banner();
+  var statusText = !r.in ? 'لم يُسجّل حضور اليوم بعد.' : (!r.out ? 'تم تسجيل الحضور، ولم يُسجّل الانصراف بعد.' : 'اكتمل تسجيل الحضور والانصراف لهذا اليوم.');
+  h += '<div class="card" style="border-inline-start:4px solid var(--pr)"><h2>🧠 حالة اليوم</h2><div>'+statusText+'</div>'+(late?'<div class="sub" style="margin:6px 0 0;color:var(--wr)">ملاحظة: وقت الحضور بعد الحد المحدد ('+workRules().inMax+').</div>':'')+(r.in&&r.out?'<div class="sub" style="margin:6px 0 0">المدة المسجلة: '+(function(){var m=mins(r.out)-mins(r.in);if(m<0)m+=1440;return Math.floor(m/60)+' ساعة و'+(m%60)+' دقيقة';})()+'</div>':'')+'</div>';
+  
+  h += '<div class="card">';
+  h += '<h2>⏱️ المواعيد اليومية الرسمية</h2>';
+  h += '<div class="kv"><span>تسجيل الحضور</span><b class="big">'+(r.in || '--:--')+(r.in?' <span class="bd '+(late?'w':'o')+'">'+(late?'متأخر':'في الموعد')+'</span>':'')+'</b></div>';
+  h += '<div class="kv"><span>تسجيل الانصراف</span><b class="big">'+(r.out || '--:--')+(r.out?' <span class="bd '+(early?'w':'o')+'">'+(early?'قبل الموعد':'تمام')+'</span>':'')+'</b></div>';
+  h += '<div class="sub" style="margin-top:8px">مواعيد الدوام: الحضور حتى <b>'+workRules().inMax+'</b>، والانصراف من <b>'+workRules().outMin+'</b></div>';
+  
+  h += '<div class="row" style="margin-top:10px">';
+  h += '<button data-a="in">🟢 تسجيل حضور الآن</button>';
+  h += '<button data-a="out" class="sec">🔴 تسجيل انصراف الآن</button>';
+  h += '</div></div>';
+
+  h += '<div class="card"><h2>✏️ إدخال / تعديل يدوي (حالة النسيان)</h2>';
+  h += '<label>التاريخ</label><input type="date" id="md" value="'+d+'">';
+  h += '<div class="row"><div><label>وقت الحضور</label><input type="time" id="mi" value="'+(r.in||'07:50')+'"></div><div><label>وقت الانصراف</label><input type="time" id="mo" value="'+(r.out||'15:50')+'"></div></div>';
+  h += '<button data-a="man" class="sec">حفظ التعديل اليدوي</button></div>';
+
+  var ks = Object.keys(S.att).sort().reverse().slice(0, 10);
+  h += '<div class="card"><h2>📅 سجل الحضور الحديث (مع خيار الحذف)</h2>'+(ks.length ? ks.map(function(k){
+    var a = S.att[k];
+    var isL = a.in && mins(a.in) > mins(workRules().inMax);
+    return '<div class="li"><span><b>'+dayName(k)+'</b><br><small style="color:var(--mu)">حضور: '+(a.in||'--')+' | انصراف: '+(a.out||'--')+(isL ? ' <span class="bd w">تأخير</span>':'')+'</small></span><button class="x" data-a="delatt" data-k="'+k+'">🗑️ حذف</button></div>';
+  }).join('') : '<div class="empty">لا توجد تسجيلات أسبوعية بعد</div>') + '</div>';
+
+  return h;
+}
+
+function leaveDays(a, b, incl){
+  var out = [], c = new Date(a+'T12:00:00'), e = new Date(b+'T12:00:00');
+  while(c <= e && out.length < 365){
+    var g = c.getDay();
+    if(incl || !isRestDay(g)) out.push(ds(c));
+    c.setDate(c.getDate()+1);
+  }
+  return out;
+}
+
+function vLeave(){
+  var n = new Date(), d = ds(n), y = n.getFullYear(), q = Math.floor(n.getMonth()/3), t = qTotal(y, q);
+  var repRem = replacementBalance();
+  var repEarned = totalReplacementEarned();
+  var repTaken = S.leaves.filter(function(l){ return l.type === 'replacement'; }).reduce(function(a,l){ return a + l.days; }, 0);
+
+  var h = '<h1>نظام ورصيد الإجازات (Monzer App)</h1><div class="sub">متابعة الأرصدة السنوية وإجازات البدل والخصم الربع سنوي ('+y+')</div>'+banner();
+
+  h += '<div class="card"><h2>📊 أرصدة الإجازات المتبقية</h2>';
+  ['annual','casual','sick'].forEach(function(k){
+    var u = used(y, k), qt = Q(k), rem = qt - u;
+    h += '<div class="kv"><span>إجازة '+NAMES[k]+'</span><b style="'+(rem<0?'color:var(--wr)':'')+'">المتبقي '+rem+' من أصل '+qt+' يوم</b></div>';
+    h += '<div class="bar"><i style="width:'+(qt>0?Math.min(100, Math.max(0, u/qt*100)):0)+'%"></i></div>';
+  });
+
+  h += '<div class="kv" style="margin-top:10px;background:var(--bg);padding:10px;border-radius:10px"><span>🎁 رصيد إجازات البدل (تراكمي تلقائي)</span><b class="big" style="font-size:18px">'+repRem+' يوم متبقي <small style="font-size:12px;font-weight:normal">(مكتسب '+repEarned+' - مأخوذ '+repTaken+')</small></b></div>';
+
+  h += '<div class="card" style="border:1px dashed var(--pr);"><h2>✏️ تعديل وضبط رصيد إجازات البدل يدوياً</h2>';
+  h += '<div class="row"><div><label>إضافة/تعديل أيام بدل مكتسبة (+)</label><input type="number" step="0.5" id="rep_m_earned" value="'+(S.manualRepEarned||0)+'" placeholder="مثال: 2"></div>';
+  h += '<div><label>تعديل/تسوية أيام بدل مخصومة (-)</label><input type="number" step="0.5" id="rep_m_deducted" value="'+(S.manualRepDeducted||0)+'" placeholder="مثال: 1"></div></div>';
+  h += '<button data-a="save_rep_manual" class="sec" style="margin-top:10px">حفظ تعديلات رصيد البدل</button></div>';
+
+  h += '<div class="kv" style="margin-top:10px"><span>مجموع الإجازات المستهلكة في '+qLabel(q)+'</span><b style="'+(t>9?'color:var(--wr)':'')+'">'+t+' أيام</b></div>';
+  h += '<div class="card"><h2>📝 تسجيل طلب إجازة جديد</h2>';
+  h += '<label>نوع الإجازة</label><select id="lt">';
+  h += '<option value="annual">سنوية (30 يوم)</option>';
+  h += '<option value="casual">عارضة (7 أيام)</option>';
+  h += '<option value="sick">مرضية (10 أيام)</option>';
+  h += '<option value="replacement">إجازة بدل (تخصم من رصيد أيام البدل: '+repRem+' يوم متاح)</option>';
+  h += '</select>';
+
+  h += '<label>مدة الإجازة</label><select id="l_dur">';
+  h += '<option value="1">يوم كامل (أو عدة أيام)</option>';
+  h += '<option value="0.5">نصف يوم (0.5 يوم)</option>';
+  h += '</select>';
+
+  h += '<div class="row"><div><label>من تاريخ</label><input type="date" id="ld" value="'+d+'"></div>';
+  h += '<div id="le_wrap"><div><label>إلى تاريخ</label><input type="date" id="le" value="'+d+'"></div></div></div>';
+
+  h += '<label style="display:flex;gap:8px;align-items:center;margin-top:10px;cursor:pointer"><input type="checkbox" id="lw" style="width:auto"> احتساب أيام الراحة الأسبوعية ضمن أيام الإجازة</label>';
+  h += '<button data-a="leave">حفظ وتسجيل الإجازة</button><div id="lm" style="color:var(--wr);font-size:13px;margin-top:6px"></div></div>';
+
+  var g = {};
+  S.leaves.forEach(function(l){
+    var k = l.gid || l.id;
+    (g[k] = g[k] || {k:k, type:l.type, ds:[], n:0}).ds.push(l.date);
+    g[k].n += l.days;
+  });
+  var ls = Object.keys(g).map(function(k){ return g[k]; }).sort(function(a,b){ return a.ds[0] < b.ds[0] ? 1 : -1; }).slice(0, 15);
+
+  h += '<div class="card"><h2>📜 سجل الإجازات المسجلة (مع خيار الحذف)</h2>'+(ls.length ? ls.map(function(o){
+    o.ds.sort();
+    var f = o.ds[0], e = o.ds[o.ds.length-1];
+    return '<div class="li"><span><b>'+(f===e ? dayName(f) : 'من '+dayName(f)+' إلى '+dayName(e))+'</b><br><small style="color:var(--mu)">نوع: '+NAMES[o.type]+' • المدة: '+o.n+' يوم</small></span><div style="display:flex;gap:6px;"><button class="x" style="color:var(--pr);border-color:var(--pr);" data-a="edit_leave_date" data-i="'+o.k+'">✏️ تعديل التاريخ</button><button class="x" data-a="dell" data-i="'+o.k+'">🗑️ حذف</button></div></div>';
+  }).join('') : '<div class="empty">لا يوجد إجازات مسجلة حالياً</div>') + '</div>';
+
+  return h;
+}
+
+function vWeekends(){
+  var h = '<h1>سجل أيام الجمعة والسبت المستحقة للبدل</h1><div class="sub">Monzer App - تتبع كافة أيام الراحات الأسبوعية المكتسبة</div>';
+  var ws = S.work.filter(function(w){ return w.kind === 'weekend'; }).sort(function(a,b){ return b.date.localeCompare(a.date); });
+
+  var grouped = {};
+  ws.forEach(function(w){
+    var ym = w.date.slice(0,7);
+    grouped[ym] = grouped[ym] || [];
+    grouped[ym].push(w);
+  });
+
+  var months = Object.keys(grouped).sort().reverse();
+
+  h += '<div class="card"><h2>🎁 إجمالي أيام البدل المكتسبة</h2>';
+  h += '<div class="kv"><span>إجمالي الأيام المكتسبة (الجمعة والسبت)</span><b class="big" style="color:var(--ok)">' + totalReplacementEarned() + ' يوم</b></div>';
+  h += '</div>';
+
+  if(months.length === 0){
+    h += '<div class="card"><div class="empty">لا توجد أيام جمعة أو سبت مسجلة للعمل حتى الآن</div></div>';
+  } else {
+    months.forEach(function(ym){
+      var daysList = grouped[ym];
+      h += '<div class="card"><h2>📅 شهر ' + ym + ' (الإجمالي: ' + daysList.length + ' يوم)</h2>';
+      daysList.forEach(function(w){
+        h += '<div class="li"><span><b>' + dayName(w.date) + '</b><br><small style="color:var(--mu)">التاريخ: ' + w.date + ' • القيمة المالية: ' + money(w.customPay || dailyRate()) + '</small></span><button class="x" data-a="delw" data-i="' + w.id + '">🗑️ حذف</button></div>';
+      });
+      h += '</div>';
+    });
+  }
+
+  return h;
+}
+
+function vWork(){
+  var n = new Date(), d = ds(n), ym = d.slice(0,7), dl = dailyRate();
+  var os = S.ot.filter(function(x){ return x.date.slice(0,7) === ym; });
+  var ws = S.work.filter(function(w){ return w.date.slice(0,7) === ym && w.kind === 'weekend'; });
+  var hs = S.work.filter(function(w){ return w.date.slice(0,7) === ym && w.kind === 'holiday'; });
+  
+  var oh = os.reduce(function(a,o){ return a + otHours(o); }, 0);
+  var op = os.reduce(function(a,o){ return a + otPay(o); }, 0);
+  var wp = ws.reduce(function(a,w){ return a + (w.customPay > 0 ? w.customPay : dl); }, 0);
+  var hp = hs.reduce(function(a,w){ return a + (w.customPay > 0 ? w.customPay : (dl * 2)); }, 0);
+
+  var h = '<h1>ساعات السهر والأعياد والراحات</h1><div class="sub">Monzer App - احتساب دقيق للساعات الإضافية لشهر '+ym+'</div>';
+
+  h += '<div class="card"><h2>⚙️ تخصيص سعر الساعة الإضافية يدوياً</h2>';
+  h += '<div class="row"><div><label>سعر الساعة الإضافية المحدد يدوياً (جنيه)</label><input type="number" id="cust_hr" value="'+(S.customHourlyRate||'')+'" placeholder="اتركه فارغاً للحساب التلقائي"></div>';
+  h += '<div><button data-a="save_cust_hr" style="margin-top:24px">حفظ سعر الساعة</button></div></div>';
+  h += '<div class="sub" style="margin-top:4px">السعر الحالي المعتمد للساعة: <b>'+money(hourlyRate())+'</b></div></div>';
+
+  h += '<div class="card"><h2>🌙 أولاً: تسجيل ساعات السهر والعمل الإضافي</h2>';
+  h += '<label>تاريخ يوم السهر</label><input type="date" id="od" value="'+d+'">';
+  h += '<div class="row"><div><label>من الساعة</label><input type="time" id="of" value="16:00"></div><div><label>إلى الساعة</label><input type="time" id="ot" value="19:00"></div></div>';
+  h += '<label>أو أدخل مبلغ/سعر السهر لهذا اليوم يدوياً بالكامل</label><input type="number" id="op_manual" placeholder="مثال: 250 جنيه">';
+  h += '<button data-a="ot">حفظ ساعات السهر</button>';
+  h += '<div class="kv" style="margin-top:12px"><span>إجمالي إضافي الشهر</span><b>'+os.length+' أيام ('+oh+' ساعة) = '+money(op)+'</b></div>';
+  
+  if(os.length){
+    h += '<div style="margin-top:10px">';
+    os.forEach(function(o){
+      var p = otPay(o);
+      h += '<div class="li"><span><b>'+dayName(o.date)+'</b><br><small style="color:var(--mu)">من '+o.from+' إلى '+o.to+' ('+otHours(o)+' ساعة) • المبلغ: '+money(p)+(o.customPay>0?' (محدد يدوياً)':'')+'</small></span><button class="x" data-a="delo" data-i="'+o.id+'">🗑️ حذف</button></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+
+  h += '<div class="card"><h2>📅 ثانياً: تسجيل العمل أيام الراحات (الجمعة والسبت)</h2>';
+  h += '<label>التاريخ</label><input type="date" id="wd2" value="'+d+'">';
+  h += '<label>القيمة المالية ليوم الجمعة/السبت (أدخل المبلغ يدوياً أو اتركها للفرض)</label><input type="number" id="wp_manual" placeholder="مثال: 350 جنيه">';
+  h += '<button data-a="wkw">تسجيل عمل جمعة / سبت</button>';
+  h += '<div class="kv" style="margin-top:12px"><span>إجمالي الجمعة والسبت هذا الشهر</span><b>'+ws.length+' أيام = '+money(wp)+' + '+ws.length+' يوم بدل</b></div>';
+  
+  if(ws.length){
+    h += '<div style="margin-top:10px">';
+    ws.forEach(function(w){
+      h += '<div class="li"><span><b>'+dayName(w.date)+'</b><br><small style="color:var(--mu)">عمل جمعة/سبت (+1 يوم بدل) • القيمة: '+money(w.customPay||dl)+'</small></span><button class="x" data-a="delw" data-i="'+w.id+'">🗑️ حذف</button></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+
+  h += '<div class="card"><h2>🎉 ثالثاً: العمل في الأعياد والعطلات الرسمية</h2>';
+  h += '<label>التاريخ</label><input type="date" id="wd3" value="'+d+'">';
+  h += '<label>القيمة المالية لعطلة العيد (أدخل المبلغ يدوياً أو اتركها لمبلغ يومين)</label><input type="number" id="hp_manual" placeholder="مثال: 700 جنيه">';
+  h += '<button data-a="wkh">تسجيل عمل يوم عيد / عطلة رسمية</button>';
+  h += '<div class="kv" style="margin-top:12px"><span>إجمالي الأعياد هذا الشهر</span><b>'+hs.length+' أيام = '+money(hp)+'</b></div>';
+  
+  if(hs.length){
+    h += '<div style="margin-top:10px">';
+    hs.forEach(function(w){
+      h += '<div class="li"><span><b>'+dayName(w.date)+'</b><br><small style="color:var(--mu)">عمل عيد • القيمة: '+money(w.customPay||(dl*2))+'</small></span><button class="x" data-a="delw" data-i="'+w.id+'">🗑️ حذف</button></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+
+  return h;
+}
+
+function vShift(){
+  var n = new Date(), d = ds(n), ym = d.slice(0,7);
+  var midShifts = S.shifts.filter(function(s){ return s.date.slice(0,7) === ym && s.type === 'mid'; });
+  var nightShifts = S.shifts.filter(function(s){ return s.date.slice(0,7) === ym && s.type === 'night'; });
+  
+  var ramadanAtts = S.ramadanAtt.filter(function(r){ return r.date.slice(0,7) === ym; });
+  var ramadanOts = S.ramadanOt.filter(function(r){ return r.date.slice(0,7) === ym; });
+
+  var midPayTotal = midShifts.reduce(function(a,s){ return a + (s.rate || S.shiftRates.mid || 0); }, 0);
+  var nightPayTotal = nightShifts.reduce(function(a,s){ return a + (s.rate || S.shiftRates.night || 0); }, 0);
+  
+  var ramadanOtTotal = ramadanOts.reduce(function(a,r){ return a + (r.otRate || S.ramadanOtRate || 0); }, 0);
+
+  var h = '<h1>نظام الورديات وعمل شهر رمضان (بدون أجر إضافي للدوام، وسهر مستقل)</h1><div class="sub">Monzer App - دوام رمضان يوم عمل عادي، والمقابل المادي للسهر فقط</div>';
+
+  h += '<div class="card"><h2>⚙️ أجور الورديات وسهر رمضان الافتراضية</h2>';
+  h += '<div class="row">';
+  h += '<div><label>أجر وردية الوسط (جنيه)</label><input type="number" id="sr_mid" value="'+(S.shiftRates.mid||'')+'" placeholder="مثال: 150"></div>';
+  h += '<div><label>أجر الوردية الليلية (جنيه)</label><input type="number" id="sr_night" value="'+(S.shiftRates.night||'')+'" placeholder="مثال: 200"></div>';
+  h += '</div>';
+  h += '<div class="row" style="margin-top:10px">';
+  h += '<div><label>أجر سهر رمضان (2 م - 7 م) (جنيه)</label><input type="number" id="sr_rot" value="'+(S.ramadanOtRate||'')+'" placeholder="مثال: 150"></div>';
+  h += '</div>';
+  h += '<button data-a="save_shift_rates" class="sec">حفظ الأجور الافتراضية</button></div>';
+
+  h += '<div class="card"><h2>🌆 1. الوردية الوسطى (3:30 م - 11:30 م)</h2>';
+  h += '<label>التاريخ</label><input type="date" id="sd_mid" value="'+d+'">';
+  h += '<div class="row"><div><label>الحضور</label><input type="time" id="si_mid" value="15:30"></div><div><label>الانصراف</label><input type="time" id="so_mid" value="23:30"></div></div>';
+  h += '<label>أجر هذه الوردية اليومي</label><input type="number" id="sp_mid" value="'+(S.shiftRates.mid||'')+'" placeholder="أدخل الأجر اليومي">';
+  h += '<button data-a="add_shift_mid">تسجيل وردية وسط</button>';
+  h += '<div class="kv" style="margin-top:10px"><span>إجمالي وردية الوسط هذا الشهر</span><b>'+midShifts.length+' أيام = '+money(midPayTotal)+'</b></div>';
+  
+  if(midShifts.length){
+    h += '<div style="margin-top:8px">';
+    midShifts.forEach(function(s){
+      h += '<div class="li"><span><b>'+dayName(s.date)+'</b><br><small style="color:var(--mu)">حضور: '+s.in+' | انصراف: '+s.out+' • الأجر: '+money(s.rate)+'</small></span><button class="x" data-a="del_shift" data-i="'+s.id+'">🗑️ حذف</button></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+
+  h += '<div class="card"><h2>🌃 2. الوردية الليلية (11:30 م - 7:30 ص)</h2>';
+  h += '<label>التاريخ</label><input type="date" id="sd_night" value="'+d+'">';
+  h += '<div class="row"><div><label>الحضور</label><input type="time" id="si_night" value="23:30"></div><div><label>الانصراف</label><input type="time" id="so_night" value="07:30"></div></div>';
+  h += '<label>أجر هذه الوردية اليومي</label><input type="number" id="sp_night" value="'+(S.shiftRates.night||'')+'" placeholder="أدخل الأجر اليومي">';
+  h += '<button data-a="add_shift_night">تسجيل وردية ليلية</button>';
+  h += '<div class="kv" style="margin-top:10px"><span>إجمالي الوردية الليلية هذا الشهر</span><b>'+nightShifts.length+' أيام = '+money(nightPayTotal)+'</b></div>';
+  
+  if(nightShifts.length){
+    h += '<div style="margin-top:8px">';
+    nightShifts.forEach(function(s){
+      h += '<div class="li"><span><b>'+dayName(s.date)+'</b><br><small style="color:var(--mu)">حضور: '+s.in+' | انصراف: '+s.out+' • الأجر: '+money(s.rate)+'</small></span><button class="x" data-a="del_shift" data-i="'+s.id+'">🗑️ حذف</button></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+
+  h += '<div class="card" style="border:2px solid var(--pr)"><h2>🌙 3. دوام شهر رمضان الرسمي (7:30 ص - 2:00 م) [يوم عمل عادي بدون مقابل إضافي]</h2>';
+  h += '<div class="sub">تسجيل أيام دوام رمضان (الانصراف 2:00 ظهراً) كأيام عمل رسمية عادية مغطاة بالمرتب الأساسي والشامل.</div>';
+  h += '<label>التاريخ</label><input type="date" id="rad_d" value="'+d+'">';
+  h += '<div class="row"><div><label>وقت الحضور</label><input type="time" id="rad_i" value="07:30"></div><div><label>وقت الانصراف</label><input type="time" id="rad_o" value="14:00"></div></div>';
+  h += '<button data-a="add_ramadan_att">تسجيل دوام رمضان (يوم عادي)</button>';
+  h += '<div class="kv" style="margin-top:10px"><span>إجمالي أيام دوام رمضان هذا الشهر</span><b style="color:var(--pr)">'+ramadanAtts.length+' يوم عمل عادي</b></div>';
+  
+  if(ramadanAtts.length){
+    h += '<div style="margin-top:8px">';
+    ramadanAtts.forEach(function(r){
+      h += '<div class="li"><span><b>'+dayName(r.date)+'</b><br><small style="color:var(--mu)">دوام رمضان الرسمي: '+r.in+'←'+r.out+' (يوم عمل عادي)</small></span><button class="x" data-a="del_ramadan_att" data-i="'+r.id+'">🗑️ حذف</button></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+
+  h += '<div class="card" style="border:2px dashed var(--pr)"><h2>✨ 4. سهر رمضان الإضافي (2:00 م - 7:00 م) [له مقابل مادي]</h2>';
+  h += '<div class="sub">سجل هنا أيام السهر الإضافية بعد الساعة 2 ظهراً وحتى 7 مساءً في شهر رمضان (لها أجر مستقل).</div>';
+  h += '<label>التاريخ</label><input type="date" id="rot_d" value="'+d+'">';
+  h += '<div class="row"><div><label>بداية السهر</label><input type="time" id="rot_f" value="14:00"></div><div><label>نهاية السهر</label><input type="time" id="rot_t" value="19:00"></div></div>';
+  h += '<label>قيمة السهر لهذا اليوم (جنيه)</label><input type="number" id="rot_p" value="'+(S.ramadanOtRate||'')+'" placeholder="أدخل مبلغ السهر">';
+  h += '<button data-a="add_ramadan_ot" class="sec">تسجيل سهر رمضان (بمقابل مادي)</button>';
+  h += '<div class="kv" style="margin-top:10px"><span>إجمالي سهر رمضان هذا الشهر</span><b>'+ramadanOts.length+' أيام = '+money(ramadanOtTotal)+'</b></div>';
+  
+  if(ramadanOts.length){
+    h += '<div style="margin-top:8px">';
+    ramadanOts.forEach(function(r){
+      h += '<div class="li"><span><b>'+dayName(r.date)+'</b><br><small style="color:var(--mu)">سهر رمضان: '+r.from+'←'+r.to+' • المقابل: '+money(r.otRate)+'</small></span><button class="x" data-a="del_ramadan_ot" data-i="'+r.id+'">🗑️ حذف</button></div>';
+    });
+    h += '</div>';
+  }
+  h += '</div>';
+
+  return h;
+}
+
+function vRep(){
+  var ym = S._ym || ds(new Date()).slice(0,7);
+  var y = +ym.slice(0,4), q = Math.floor((+ym.slice(5,7)-1)/3);
+  
+  var attDays = Object.keys(S.att).filter(function(k){ return k.slice(0,7) === ym; });
+  var lates = attDays.filter(function(k){ return S.att[k].in && mins(S.att[k].in) > mins(workRules().inMax); }).length;
+  var earlies = attDays.filter(function(k){ return S.att[k].out && mins(S.att[k].out) < mins(workRules().outMin); }).length;
+
+  var os = S.ot.filter(function(o){ return o.date.slice(0,7) === ym; });
+  var otHrs = os.reduce(function(a,o){ return a + otHours(o); }, 0);
+  var otMoney = os.reduce(function(a,o){ return a + otPay(o); }, 0);
+
+  var holDays = S.work.filter(function(w){ return w.date.slice(0,7) === ym && w.kind === 'holiday'; }).length;
+  var wkDays = S.work.filter(function(w){ return w.date.slice(0,7) === ym && w.kind === 'weekend'; }).length;
+
+  var holPay = S.work.filter(function(w){return w.date.slice(0,7)===ym&&w.kind==='holiday';}).reduce(function(a,w){return a+(w.customPay>0?w.customPay:2*dailyRate());},0);
+  var wkPay = S.work.filter(function(w){return w.date.slice(0,7)===ym&&w.kind==='weekend';}).reduce(function(a,w){return a+(w.customPay>0?w.customPay:dailyRate());},0);
+
+  var midShifts = S.shifts.filter(function(s){ return s.date.slice(0,7) === ym && s.type === 'mid'; });
+  var nightShifts = S.shifts.filter(function(s){ return s.date.slice(0,7) === ym && s.type === 'night'; });
+  var ramadanAtts = S.ramadanAtt.filter(function(r){ return r.date.slice(0,7) === ym; });
+  var ramadanOts = S.ramadanOt.filter(function(r){ return r.date.slice(0,7) === ym; });
+
+  var midPayTotal = midShifts.reduce(function(a,s){ return a + (s.rate || 0); }, 0);
+  var nightPayTotal = nightShifts.reduce(function(a,s){ return a + (s.rate || 0); }, 0);
+  var ramadanOtTotal = ramadanOts.reduce(function(a,r){ return a + (r.otRate || 0); }, 0);
+
+  var totalAnnualProfit = (+S.basicSalary || 0) * (+S.profitMonths || 0);
+  var grandTotalPay = otMoney + holPay + wkPay + midPayTotal + nightPayTotal + ramadanOtTotal;
+
+  var selectedBracketPct = 0;
+  var isAutoBracket = (S.taxBracketChoice === 'auto' || !S.taxBracketChoice);
+
+  function getAutoBracketRate(annualIncome) {
+    if (annualIncome <= 40000) return 0;
+    if (annualIncome <= 55000) return 0.10;
+    if (annualIncome <= 70000) return 0.15;
+    if (annualIncome <= 200000) return 0.20;
+    if (annualIncome <= 400000) return 0.225;
+    if (annualIncome <= 1200000) return 0.25;
+    return 0.275;
+  }
+
+  function calcFullProgressiveTax(annualIncome) {
+    if (annualIncome <= 40000) return 0;
+    var taxable = annualIncome - 40000;
+    var tax = 0;
+    if (taxable > 0) { var b1 = Math.min(taxable, 15000); tax += b1 * 0.10; taxable -= b1; }
+    if (taxable > 0) { var b2 = Math.min(taxable, 15000); tax += b2 * 0.15; taxable -= b2; }
+    if (taxable > 0) { var b3 = Math.min(taxable, 130000); tax += b3 * 0.20; taxable -= b3; }
+    if (taxable > 0) { var b4 = Math.min(taxable, 200000); tax += b4 * 0.225; taxable -= b4; }
+    if (taxable > 0) { var b5 = Math.min(taxable, 800000); tax += b5 * 0.25; taxable -= b5; }
+    if (taxable > 0) { tax += taxable * 0.275; }
+    return tax;
+  }
+
+  var annualBaseSalary = (+S.salary || 0) * 12;
+  var estAnnualIncome = annualBaseSalary + totalAnnualProfit + (grandTotalPay * 12);
+
+  if (isAutoBracket) {
+    selectedBracketPct = getAutoBracketRate(estAnnualIncome);
+  } else {
+    selectedBracketPct = parseFloat(S.taxBracketChoice) / 100;
+  }
+
+  var monthlyExtraGross = grandTotalPay;
+  var monthlyExtraTaxDeduction = monthlyExtraGross * selectedBracketPct;
+  var monthlyExtraNet = monthlyExtraGross - monthlyExtraTaxDeduction;
+
+  var profitTaxDeduction = totalAnnualProfit * selectedBracketPct;
+  var profitNet = totalAnnualProfit - profitTaxDeduction;
+
+  var totalAnnualTaxEst = isAutoBracket ? calcFullProgressiveTax(estAnnualIncome) : (estAnnualIncome * selectedBracketPct);
+  var totalMonthlyTaxEst = totalAnnualTaxEst / 12;
+  var totalDailyTaxEst = totalAnnualTaxEst / 365;
+  var totalHourlyTaxEst = totalAnnualTaxEst / (240 * 12);
+
+  var netMonthlyTotalIncome = (+S.salary || 0) + monthlyExtraNet - (isAutoBracket ? (calcFullProgressiveTax(annualBaseSalary)/12) : ((+S.salary||0)*selectedBracketPct));
+
+  var qT = qTotal(y, q);
+
+  var h = '<h1>التقرير المالي - Monzer App</h1><div class="sub">تقديرات للمستحقات والبدلات والضريبة؛ راجع جهة الرواتب قبل الاعتماد</div>'+banner();
+
+  h += '<div class="card"><h2>💵 1. إدخال المرتبات والأجر الأساسي</h2>';
+  h += '<div class="row"><div><label>المرتب الشامل (جنيه)</label><input type="number" id="sal" value="'+(S.salary||'')+'" placeholder="مثال: 10000"></div>';
+  h += '<div><label>الأجر الأساسي فقط (جنيه)</label><input type="number" id="bsal" value="'+(S.basicSalary||'')+'" placeholder="مثال: 4000"></div></div>';
+  h += '<button data-a="sal">حفظ المرتبات</button>';
+  h += '<div class="kv" style="margin-top:10px"><span>قيمة اليومية (الشامل ÷ 30)</span><b>'+money(dailyRate())+'</b></div>';
+  h += '<div class="kv"><span>قيمة الساعة المعتمدة للاحتساب</span><b>'+money(hourlyRate())+'</b></div></div>';
+
+  h += '<div class="card"><h2>🎁 2. حساب الأرباح والمكافأة السنوية</h2>';
+  h += '<div class="sub">تُحسب الأرباح السنوية تلقائياً بناءً على الأجر الأساسي وبنسبة الأشهر.</div>';
+  h += '<div class="row"><div><label>نسبة الأشهر المقررة للأرباح</label><input type="number" step="0.1" id="pmonths" value="'+(S.profitMonths||'')+'" placeholder="مثال: 3.5 شهر"></div>';
+  h += '<div><button data-a="save_profit" style="margin-top:24px">حفظ الأرباح المستحقة</button></div></div>';
+  h += '<div class="kv" style="margin-top:12px;background:var(--okb);padding:12px;border-radius:10px;border:1px solid var(--ok)"><span>إجمالي الأرباح السنوية المستحقة</span><b class="big" style="color:var(--ok);font-size:20px">'+money(totalAnnualProfit)+'</b></div>';
+  h += '</div>';
+
+  h += '<div class="card" style="border: 2px solid var(--pr); border-radius: 16px; padding: 16px;">';
+  h += '<h2>⚖️ 3. اختيار الشريحة الضريبية والحساب الفوري للخصم</h2>';
+  h += '<div class="row" style="margin-bottom: 12px;"><div><label>الشريحة الضريبية المعتمدة</label><select id="tax_bracket_sel">';
+  h += '<option value="auto" '+(S.taxBracketChoice==='auto'?'selected':'')+'>تلقائي (تقدير مبسط داخل التطبيق)</option>';
+  h += '<option value="0" '+(S.taxBracketChoice==='0'?'selected':'')+'>شريحة 0% (معفى حتى 40 ألف سنوياً)</option>';
+  h += '<option value="10" '+(S.taxBracketChoice==='10'?'selected':'')+'>شريحة 10% (من 40 ألف إلى 55 ألف)</option>';
+  h += '<option value="15" '+(S.taxBracketChoice==='15'?'selected':'')+'>شريحة 15% (من 55 ألف إلى 70 ألف)</option>';
+  h += '<option value="20" '+(S.taxBracketChoice==='20'?'selected':'')+'>شريحة 20% (من 70 ألف إلى 200 ألف)</option>';
+  h += '<option value="22.5" '+(S.taxBracketChoice==='22.5'?'selected':'')+'>شريحة 22.5% (من 200 ألف إلى 400 ألف)</option>';
+  h += '<option value="25" '+(S.taxBracketChoice==='25'?'selected':'')+'>شريحة 25% (من 400 ألف إلى 1.2 مليون)</option>';
+  h += '<option value="27.5" '+(S.taxBracketChoice==='27.5'?'selected':'')+'>شريحة 27.5% (أكثر من 1.2 مليون)</option>';
+  h += '</select></div><div><button data-a="save_tax_bracket" style="margin-top:24px">اعتماد الشريحة</button></div></div>';
+
+  h += '<div class="warn" style="font-size:13px;font-weight:500">حساب الضريبة هنا تقديري ومبسّط، ولا يراعي كل الإعفاءات أو القواعد المحلية أو تغيّر التشريعات. لا تستخدمه ككشف راتب رسمي؛ راجع مسؤول الرواتب أو مختصاً ضريبياً.</div>';
+  h += '<div class="kv" style="background:var(--infob); padding:10px; border-radius:10px; margin-bottom:10px;">';
+  h += '<span>الشريحة المطبقة حالياً على الخصم</span><b class="big" style="font-size:16px; color:var(--info);">' + (isAutoBracket ? 'احتساب تصاعدي تلقائي' : (S.taxBracketChoice + '% خصم مباشر')) + '</b></div>';
+
+  h += '<h2 style="font-size:15px; margin-top:14px; color:var(--tx);">📌 خصم الضريبة من الأرباح والمكافآت السنوية</h2>';
+  h += '<div class="kv"><span>الأرباح الإجمالية المستحقة قبل الضريبة</span><b>' + money(totalAnnualProfit) + '</b></div>';
+  h += '<div class="kv" style="color:var(--wr)"><span>الضريبة المستقطعة من الأرباح (' + (selectedBracketPct*100) + '%)</span><b style="color:var(--wr)">- ' + money(profitTaxDeduction) + '</b></div>';
+  h += '<div class="kv" style="background:var(--okb); padding:8px; border-radius:8px;"><span>صافي الأرباح السنوية التي تدخل جيبك</span><b style="color:var(--ok)">' + money(profitNet) + '</b></div>';
+
+  h += '<h2 style="font-size:15px; margin-top:14px; color:var(--tx);">🌙 خصم الضريبة من العمل الإضافي والسهر للشهر الحالي</h2>';
+  h += '<div class="kv"><span>إجمالي الإضافيات (سهر، جمعة/سبت، أعياد، ورديات، سهر رمضان)</span><b>' + money(monthlyExtraGross) + '</b></div>';
+  h += '<div class="kv" style="color:var(--wr)"><span>الخصم الضريبي المستقطع لهذا الشهر</span><b style="color:var(--wr)">- ' + money(monthlyExtraTaxDeduction) + '</b></div>';
+  h += '<div class="kv" style="background:var(--okb); padding:8px; border-radius:8px;"><span>صافي الإضافي النظري المستلم لهذا الشهر</span><b style="color:var(--ok)">' + money(monthlyExtraNet) + '</b></div>';
+
+  h += '<h2 style="font-size:15px; margin-top:14px; color:var(--tx);">⏱️ التقدير الزمني للاستقطاع وصافي الدخل</h2>';
+  h += '<div class="kv"><span>الخصم الضريبي التقديري الشهري</span><b style="color:var(--wr)">' + money(totalMonthlyTaxEst) + ' / شهر</b></div>';
+  h += '<div class="kv"><span>الخصم الضريبي اليومي</span><b>' + money(totalDailyTaxEst) + ' / يوم</b></div>';
+  h += '<div class="kv"><span>الخصم الضريبي بالساعة</span><b>' + money(totalHourlyTaxEst) + ' / ساعة</b></div>';
+  
+  h += '<div class="kv" style="margin-top:10px; background:var(--okb); padding:10px; border-radius:10px; border:1px solid var(--ok)">';
+  h += '<span>إجمالي صافي الدخل الشهري المتوقع (بعد الضريبة)</span><b class="big" style="color:var(--ok); font-size:18px">' + money(netMonthlyTotalIncome) + '</b>';
+  h += '</div></div>';
+
+  h += '<div class="card"><label><b>اختر الشهر المعروض للتقرير الشهري:</b></label><input type="month" id="rm" value="'+ym+'">';
+  
+  h += '<h2 style="margin-top:16px">📌 ملخص الحضور والانصراف</h2>';
+  h += '<div class="kv"><span>أيام الحضور الفعلية (بما فيها دوام رمضان)</span><b>'+(attDays.length + ramadanAtts.length)+' يوم</b></div>';
+  h += '<div class="kv"><span>عدد مرات التأخير (بعد '+workRules().inMax+')</span><b style="'+(lates>0?'color:var(--wr)':'')+'">'+lates+' مرة</b></div>';
+  h += '<div class="kv"><span>الانصراف المبكر (قبل '+workRules().outMin+' أو 2 م لرمضان)</span><b>'+earlies+' مرة</b></div>';
+
+  h += '<h2 style="margin-top:16px">🏖️ إحصائيات الإجازات</h2>';
+  ['annual','casual','sick'].forEach(function(k){
+    h += '<div class="kv"><span>إجازات '+NAMES[k]+'</span><b>'+mTotal(ym, k)+' يوم</b></div>';
+  });
+  h += '<div class="kv"><span>إجازات البدل المستهلكة هذا الشهر</span><b>'+mTotal(ym, 'replacement')+' يوم</b></div>';
+  h += '<div class="kv"><span>إجمالي إجازات الشهر</span><b>'+mTotal(ym)+' يوم</b></div>';
+  h += '<div class="kv"><span>إجمالي الإجازات الخاضعة لشرط '+qLabel(q)+'</span><b style="'+(qT>9?'color:var(--wr)':'')+'">'+qT+' يوم</b></div>';
+
+  h += '<h2 style="margin-top:16px">💰 إجمالي المستحقات المالية للشهر الحالي ('+ym+')</h2>';
+  h += '<div class="kv"><span>مبلغ ساعات السهر والإضافي</span><b>'+money(otMoney)+' ('+otHrs+' ساعة)</b></div>';
+  h += '<div class="kv"><span>بدل العمل في الأعياد الرسمية</span><b>'+money(holPay)+' ('+holDays+' أيام)</b></div>';
+  h += '<div class="kv"><span>بدل العمل الجمعة والسبت</span><b>'+money(wkPay)+' ('+wkDays+' أيام)</b></div>';
+  h += '<div class="kv"><span>أجر وردية الوسط</span><b>'+money(midPayTotal)+' ('+midShifts.length+' يوم)</b></div>';
+  h += '<div class="kv"><span>أجر الوردية الليلية</span><b>'+money(nightPayTotal)+' ('+nightShifts.length+' يوم)</b></div>';
+  h += '<div class="kv"><span>دوام رمضان الرسمي (يوم عمل عادي)</span><b style="color:var(--pr)">'+ramadanAtts.length+' يوم (ضمن المرتب)</b></div>';
+  h += '<div class="kv"><span>أجر سهر رمضان الإضافي</span><b>'+money(ramadanOtTotal)+' ('+ramadanOts.length+' يوم)</b></div>';
+  h += '<div class="kv" style="margin-top:8px"><span>إجمالي الإضافي المستحق لهذا الشهر</span><b class="big">'+money(grandTotalPay)+'</b></div>';
+  h += '</div>';
+
+  return h;
+}
+
+function vSettings(){
+  var h = '<h1>Monzer App - الإعدادات والبيانات</h1><div class="sub">بياناتك محفوظة على هذا الجهاز فقط ما لم تصدّر نسخة احتياطية</div>';
+
+  h += '<div class="card"><h2>👤 بيانات الحساب المحلية</h2>';
+  h += '<label>بريد للتعريف داخل النسخة الاحتياطية (لا تتم مزامنته)</label><input type="email" id="uemail" value="'+esc(S.email||'')+'" placeholder="user@gmail.com">';
+  h += '<button data-a="save_email">حفظ البريد محلياً</button></div>';
+
+  h += '<div class="card"><h2>🕒 قواعد الدوام وأيام الراحة</h2>';
+  h += '<div class="row"><div><label>آخر وقت للحضور في الموعد</label><input type="time" id="rule_in" value="'+workRules().inMax+'"></div><div><label>أبكر وقت انصراف طبيعي</label><input type="time" id="rule_out" value="'+workRules().outMin+'"></div></div>';
+  h += '<label>أيام الراحة الأسبوعية المستخدمة عند حساب الإجازة</label><select id="weekend_mode"><option value="fri_sat" '+(workRules().weekendMode==='fri_sat'?'selected':'')+'>الجمعة والسبت</option><option value="sat_sun" '+(workRules().weekendMode==='sat_sun'?'selected':'')+'>السبت والأحد</option><option value="fri" '+(workRules().weekendMode==='fri'?'selected':'')+'>الجمعة فقط</option><option value="sat" '+(workRules().weekendMode==='sat'?'selected':'')+'>السبت فقط</option><option value="none" '+(workRules().weekendMode==='none'?'selected':'')+'>لا توجد أيام مستثناة</option></select>';
+  h += '<button data-a="save_work_rules" class="sec">حفظ قواعد الدوام</button></div>';
+
+  h += '<div class="card"><h2>⚙️ تعديل أرصدة الإجازات السنوية المستحقة</h2>';
+  h += '<div class="row"><div><label>السنوية</label><input type="number" id="qa" value="'+Q('annual')+'"></div><div><label>العارضة</label><input type="number" id="qc" value="'+Q('casual')+'"></div><div><label>المرضية</label><input type="number" id="qs" value="'+Q('sick')+'"></div></div>';
+  h += '<button data-a="quota" class="sec">حفظ الأرصدة الجديدة</button></div>';
+
+  h += '<div class="card"><h2>🔔 إذن إشعارات المتصفح</h2>';
+  h += '<div class="sub">يمنح الإذن فقط؛ لا تُجدول هذه النسخة المحلية إشعارات أثناء إغلاق الصفحة.</div>';
+  h += '<button data-a="req_notify">طلب إذن الإشعارات</button>';
+  h += '<button data-a="download_ics" class="sec" style="margin-top:8px">📅 إضافة المواعيد لتقويم Google / Apple Calendar</button></div>';
+
+  h += '<div class="card"><h2>💾 النسخ الاحتياطي وتصدير البيانات</h2>';
+  h += '<div class="row">';
+  h += '<button data-a="exp_json">تصدير النسخة (JSON)</button>';
+  h += '<button data-a="exp_csv" class="sec">تصدير كملف Excel / CSV</button>';
+  h += '</div>';
+  h += '<label style="margin-top:12px">استرجاع نسخة احتياطية</label>';
+  h += '<textarea id="bkt" rows="3" placeholder="الصق كود النسخة الاحتياطية هنا..."></textarea>';
+  h += '<button data-a="rs" class="sec">استرجاع البيانات الآن</button>';
+  h += '<div id="bkm" style="margin-top:6px;font-size:13px;color:var(--pr)"></div></div>';
+
+  return h;
+}
+
+var ICON_SVG = '<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="mg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2dd4bf"/><stop offset="1" stop-color="#0f766e"/></linearGradient></defs><rect width="512" height="512" rx="120" fill="url(%23mg)"/><circle cx="256" cy="262" r="140" fill="none" stroke="#fff" stroke-width="30"/><path d="M256 176v90l62 40" fill="none" stroke="#fff" stroke-width="30" stroke-linecap="round" stroke-linejoin="round"/><circle cx="380" cy="132" r="42" fill="#fbbf24" stroke="#0f766e" stroke-width="14"/></svg>';
+
+function render(){
+  var theme = S.theme === 'dark' ? 'dark' : (S.theme === 'light' ? 'light' : '');
+  if(theme) document.documentElement.setAttribute('data-theme', theme);
+  else document.documentElement.removeAttribute('data-theme');
+
+  var viewFn = { today: vToday, leave: vLeave, work: vWork, weekends: vWeekends, shift: vShift, rep: vRep, settings: vSettings }[tab];
+  
+  var brandHeader = '<div class="brand-header"><div class="brand">'+ICON_SVG+'<b>Monzer App (v15 Smart Local)</b></div><button class="theme-toggle" id="t-toggle" title="تبديل الوضع">🌙</button></div>';
+  
+  document.getElementById('app').innerHTML = brandHeader + viewFn();
+  document.getElementById('nav').innerHTML = TABS.map(function(t){
+    return '<a data-t="'+t[0]+'" class="'+(t[0]===tab?'on':'')+'"><span>'+t[1]+'</span>'+t[2]+'</a>';
+  }).join('');
+}
+
+document.addEventListener('change', function(e){
+  if(e.target.id === 'rm' && e.target.value){
+    S._ym = e.target.value;
+    render();
+  }
+  if(e.target.id === 'l_dur'){
+    var wrap = document.getElementById('le_wrap');
+    if(wrap) {
+      if(e.target.value === '0.5') wrap.style.display = 'none';
+      else wrap.style.display = 'block';
+    }
+  }
+});
+
+document.addEventListener('click', function(e){
+  var toggle = e.target.closest('#t-toggle');
+  if(toggle) {
+    S.theme = (S.theme === 'dark') ? 'light' : 'dark';
+    save(); render(); return;
+  }
+
+  var t = e.target.closest('[data-t]');
+  if(t){ tab = t.dataset.t; render(); window.scrollTo(0,0); return; }
+
+  var b = e.target.closest('[data-a]');
+  if(!b) return;
+
+  var a = b.dataset.a, n = new Date(), d = ds(n), id = Date.now();
+  if(['delatt','dell','delo','delw','del_shift','del_ramadan_att','del_ramadan_ot'].indexOf(a)>=0 && !confirm('هل تريد حذف هذا السجل؟')) return;
+
+  if(a === 'in'){ S.att[d] = S.att[d] || {}; S.att[d].in = ts(n); }
+  else if(a === 'out'){ S.att[d] = S.att[d] || {}; S.att[d].out = ts(n); }
+  else if(a === 'man'){
+    var md = V('md'); if(validDateInput(md)){ S.att[md] = { in: isTimeValue(V('mi'))?V('mi'):'', out: isTimeValue(V('mo'))?V('mo'):'' }; } else { alert('اختر تاريخاً صحيحاً'); return; }
+  }
+  else if(a === 'delatt'){ delete S.att[b.dataset.k]; }
+  else if(a === 'leave'){
+    var ld = V('ld'), lm = document.getElementById('lm');
+    var lType = V('lt');
+    var dur = parseFloat(V('l_dur')) || 1;
+    
+    if(dur === 0.5){
+      if(!validDateInput(ld)){ if(lm) lm.textContent = 'يرجى اختيار تاريخ صحيح'; return; }
+      if(S.leaves.some(function(x){return x.date===ld;})){ if(lm) lm.textContent='توجد إجازة مسجلة مسبقاً في هذا اليوم'; return; }
+      if(lType === 'replacement' && replacementBalance() < 0.5){
+        if(lm) lm.textContent = 'رصيد إجازات البدل لديك لا يكفي (المتاح: ' + replacementBalance() + ' يوم)'; return;
+      }
+      S.leaves.push({ id: id, gid: id, date: ld, type: lType, days: 0.5 });
+    } else {
+      var le = V('le') || ld;
+      if(!ld || le < ld){ if(lm) lm.textContent = 'تأكد أن تاريخ النهاية يطابق أو يلي تاريخ البداية'; return; }
+      if(!validDateInput(ld) || !validDateInput(le)){ if(lm) lm.textContent = 'صيغة التاريخ غير صحيحة'; return; }
+      var span=(Date.parse(le+'T00:00:00Z')-Date.parse(ld+'T00:00:00Z'))/86400000;
+      if(span>364){ if(lm) lm.textContent = 'الفترة طويلة جداً؛ سجّل الإجازة على فترات لا تتجاوز 365 يوماً'; return; }
+      var dd = leaveDays(ld, le, document.getElementById('lw').checked);
+      if(!dd.length){ if(lm) lm.textContent = 'الفترة تقع بالكامل في العطلة الأسبوعية'; return; }
+      if(S.leaves.some(function(x){return dd.indexOf(x.date)>=0;})){ if(lm) lm.textContent='توجد إجازة مسجلة مسبقاً في يوم أو أكثر من الفترة المختارة'; return; }
+      if(lType === 'replacement' && replacementBalance() < dd.length){
+        if(lm) lm.textContent = 'رصيد إجازات البدل لا يكفي'; return;
+      }
+      dd.forEach(function(x, i){
+        S.leaves.push({ id: id+i, gid: id, date: x, type: lType, days: 1 });
+      });
+    }
+  }
+  else if(a === 'save_rep_manual'){
+    S.manualRepEarned = parseFloat(V('rep_m_earned')) || 0;
+    S.manualRepDeducted = parseFloat(V('rep_m_deducted')) || 0;
+    alert('تم تعديل رصيد إجازات البدل يدوياً بنجاح ✅');
+  }
+  else if(a === 'edit_leave_date'){
+    var lid = b.dataset.i;
+    var group = S.leaves.filter(function(l){ return (l.gid || l.id) == lid; });
+    if(group.length){
+      var firstDate=group.map(function(l){return l.date;}).sort()[0];
+      var nDate = prompt('أدخل تاريخ بداية الإجازة الجديد (YYYY-MM-DD):', firstDate);
+      if(nDate){
+        if(!isDateValue(nDate)){ alert('التاريخ غير صحيح'); return; }
+        var base=Date.parse(firstDate+'T00:00:00Z'), target=Date.parse(nDate+'T00:00:00Z');
+        var proposed=group.map(function(l){return new Date(target+(Date.parse(l.date+'T00:00:00Z')-base)).toISOString().slice(0,10);});
+        if(S.leaves.some(function(l){return group.indexOf(l)<0&&proposed.indexOf(l.date)>=0;})){ alert('يتعارض التاريخ الجديد مع إجازة أخرى مسجلة'); return; }
+        group.forEach(function(l,i){l.date=proposed[i];});
+        alert('تم نقل فترة الإجازة مع الحفاظ على مدتها ✅');
+      }
+    }
+  }
+  else if(a === 'quota'){
+    S.quota = {
+      annual: Math.max(0, parseFloat(V('qa')) || 0),
+      casual: Math.max(0, parseFloat(V('qc')) || 0),
+      sick: Math.max(0, parseFloat(V('qs')) || 0)
+    };
+    alert('تم حفظ أرصدة الإجازات بنجاح ✅');
+  }
+  else if(a === 'dell'){
+    S.leaves = S.leaves.filter(function(x){ return (x.gid||x.id) != b.dataset.i; });
+  }
+  else if(a === 'save_cust_hr'){
+    S.customHourlyRate = Math.max(0,parseFloat(V('cust_hr')) || 0);
+    alert('تم حفظ سعر الساعة الإضافية المحدد يدوياً ✅');
+  }
+  else if(a === 'ot'){
+    var od = V('od');
+    var custP = parseFloat(V('op_manual')) || 0;
+    if(validDateInput(od) && (custP > 0 || (isTimeValue(V('of')) && isTimeValue(V('ot'))))){
+      if(!uniqueDate(S.ot,od)){ alert('يوجد سجل إضافي بهذا التاريخ بالفعل؛ احذف السجل القديم أو عدّله من القائمة'); return; }
+      if(custP<=0 && otHours({from:V('of'),to:V('ot')})===0){ alert('مدة السهر يجب أن تكون أكبر من صفر'); return; }
+      S.ot.push({ id: id, date: od, from: V('of')||'16:00', to: V('ot')||'19:00', customPay: custP });
+    } else { alert('أدخل تاريخاً صحيحاً ووقتاً صالحاً أو مبلغاً يدوياً'); return; }
+  }
+  else if(a === 'delo'){ S.ot = S.ot.filter(function(x){ return x.id != b.dataset.i; }); }
+  else if(a === 'wkw'){
+    var wd2 = V('wd2');
+    var manualP = parseFloat(V('wp_manual')) || 0;
+    if(!validDateInput(wd2)){ alert('اختر تاريخاً صحيحاً'); return; }
+    if(!uniqueDate(S.work,wd2)){ alert('تم تسجيل عمل في هذا التاريخ مسبقاً؛ لا يمكن تكرار اليوم كراحة وعطلة معاً'); return; }
+    S.work.push({ id: id, date: wd2, kind: 'weekend', customPay: manualP });
+  }
+  else if(a === 'wkh'){
+    var wd3 = V('wd3');
+    var manualP = parseFloat(V('hp_manual')) || 0;
+    if(!validDateInput(wd3)){ alert('اختر تاريخاً صحيحاً'); return; }
+    if(!uniqueDate(S.work,wd3)){ alert('تم تسجيل عمل في هذا التاريخ مسبقاً؛ لا يمكن تكرار اليوم كراحة وعطلة معاً'); return; }
+    S.work.push({ id: id, date: wd3, kind: 'holiday', customPay: manualP });
+  }
+  else if(a === 'delw'){ S.work = S.work.filter(function(x){ return x.id != b.dataset.i; }); }
+  else if(a === 'save_work_rules'){
+    if(!isTimeValue(V('rule_in'))||!isTimeValue(V('rule_out'))){ alert('أدخل أوقاتاً صحيحة'); return; }
+    S.workRules={inMax:V('rule_in'),outMin:V('rule_out'),weekendMode:['fri_sat','sat_sun','fri','sat','none'].indexOf(V('weekend_mode'))>=0?V('weekend_mode'):'fri_sat'};
+    alert('تم حفظ قواعد الدوام وأيام الراحة');
+  }
+  else if(a === 'save_shift_rates'){
+    S.shiftRates = {
+      mid: Math.max(0,parseFloat(V('sr_mid')) || 0),
+      night: Math.max(0,parseFloat(V('sr_night')) || 0)
+    };
+    S.ramadanOtRate = Math.max(0,parseFloat(V('sr_rot')) || 0);
+    alert('تم حفظ الأجور الافتراضية للورديات وسهر رمضان بنجاح ✅');
+  }
+  else if(a === 'add_shift_mid'){
+    var sd = V('sd_mid');
+    if(!validDateInput(sd)||!isTimeValue(V('si_mid'))||!isTimeValue(V('so_mid'))){ alert('تحقق من التاريخ وأوقات الوردية'); return; }
+    if(S.shifts.some(function(x){return x.date===sd&&x.type==='mid';})){ alert('وردية الوسط مسجلة لهذا التاريخ بالفعل'); return; }
+    S.shifts.push({ id: id, date: sd, type: 'mid', in: V('si_mid'), out: V('so_mid'), rate: parseFloat(V('sp_mid'))||S.shiftRates.mid||0 });
+  }
+  else if(a === 'add_shift_night'){
+    var sd = V('sd_night');
+    if(!validDateInput(sd)||!isTimeValue(V('si_night'))||!isTimeValue(V('so_night'))){ alert('تحقق من التاريخ وأوقات الوردية'); return; }
+    if(S.shifts.some(function(x){return x.date===sd&&x.type==='night';})){ alert('الوردية الليلية مسجلة لهذا التاريخ بالفعل'); return; }
+    S.shifts.push({ id: id, date: sd, type: 'night', in: V('si_night'), out: V('so_night'), rate: parseFloat(V('sp_night'))||S.shiftRates.night||0 });
+  }
+  else if(a === 'del_shift'){
+    S.shifts = S.shifts.filter(function(s){ return s.id != b.dataset.i; });
+  }
+  else if(a === 'add_ramadan_att'){
+    var rd = V('rad_d');
+    if(!validDateInput(rd)||!isTimeValue(V('rad_i'))||!isTimeValue(V('rad_o'))){ alert('تحقق من التاريخ وأوقات الدوام'); return; }
+    if(S.ramadanAtt.some(function(x){return x.date===rd;})){ alert('دوام رمضان مسجل لهذا التاريخ بالفعل'); return; }
+    S.ramadanAtt.push({ id: id, date: rd, in: V('rad_i'), out: V('rad_o') });
+  }
+  else if(a === 'del_ramadan_att'){
+    S.ramadanAtt = S.ramadanAtt.filter(function(r){ return r.id != b.dataset.i; });
+  }
+  else if(a === 'add_ramadan_ot'){
+    var rd = V('rot_d');
+    if(!validDateInput(rd)||!isTimeValue(V('rot_f'))||!isTimeValue(V('rot_t'))){ alert('تحقق من التاريخ وأوقات السهر'); return; }
+    if(S.ramadanOt.some(function(x){return x.date===rd;})){ alert('سهر رمضان مسجل لهذا التاريخ بالفعل'); return; }
+    S.ramadanOt.push({ id: id, date: rd, from: V('rot_f'), to: V('rot_t'), otRate: parseFloat(V('rot_p'))||S.ramadanOtRate||0 });
+  }
+  else if(a === 'del_ramadan_ot'){
+    S.ramadanOt = S.ramadanOt.filter(function(r){ return r.id != b.dataset.i; });
+  }
+  else if(a === 'save_tax_bracket'){
+    S.taxBracketChoice = V('tax_bracket_sel') || 'auto';
+    alert('تم حفظ اختيار الشريحة الضريبية بنجاح ✅');
+  }
+  else if(a === 'sal'){
+    S.salary = Math.max(0,parseFloat(V('sal')) || 0);
+    S.basicSalary = Math.max(0,parseFloat(V('bsal')) || 0);
+    alert('تم حفظ بيانات المرتب بنجاح ✅');
+  }
+  else if(a === 'save_profit'){
+    S.profitMonths = Math.max(0,parseFloat(V('pmonths')) || 0);
+    alert('تم حفظ نسبة الأشهر وحساب الأرباح بنجاح ✅');
+  }
+  else if(a === 'save_email'){
+    var em=V('uemail');
+    S.email=(em.length<=254 && /^[^\s<>"']+@[^\s<>"']+\.[^\s<>"']+$/.test(em))?em:'';
+    if(em && !S.email){alert('صيغة البريد الإلكتروني غير صحيحة');return;}
+    alert('تم حفظ البريد محلياً ✅');
+  }
+  else if(a === 'req_notify'){
+    if ('Notification' in window) {
+      Notification.requestPermission().then(function(p){
+        if(p === 'granted') alert('تم منح إذن الإشعارات لهذا المتصفح؛ لا تُرسل النسخة المحلية تنبيهات مجدولة أثناء إغلاق الصفحة.');
+        else alert('لم يتم منح الإذن للإشعارات');
+      });
+    } else alert('المتصفح لا يدعم التنبيهات المباشرة');
+  }
+  else if(a === 'download_ics'){
+    var startDate = nextWorkday().replace(/-/g,'');
+    var icsData = "BEGIN:VCALENDAR\r\nVERSION:2.0\r\nPRODID:-//Monzer App//NONSGML//EN\r\n" +
+      "BEGIN:VEVENT\r\nSUMMARY:تذكير تسجيل الحضور (Monzer App)\r\nRRULE:FREQ=WEEKLY;BYDAY="+icalDays()+"\r\nDTSTART:"+startDate+"T"+workRules().inMax.replace(':','')+"00\r\nDURATION:PT10M\r\nEND:VEVENT\r\n" +
+      "END:VCALENDAR\r\n";
+    var blob = new Blob([icsData], { type: 'text/calendar;charset=utf-8' });
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.setAttribute('download', 'monzer_work_reminders.ics');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+  else if(a === 'exp_json'){
+    var blob = new Blob([JSON.stringify(S, null, 2)], { type: 'application/json' });
+    var aLink = document.createElement('a');
+    aLink.href = URL.createObjectURL(blob);
+    aLink.download = 'monzer_app_backup_' + ds(new Date()) + '.json';
+    aLink.click();
+  }
+  else if(a === 'exp_csv'){
+    var csvCell=function(x){return '"'+String(x==null?'':x).replace(/"/g,'""')+'"';};
+    var csv = "\uFEFFالتاريخ,النوع,التفاصيل\r\n";
+    Object.keys(S.att).sort().forEach(function(k){ csv += [k,'حضور وانصراف','حضور: '+(S.att[k].in||'')+' | انصراف: '+(S.att[k].out||'')].map(csvCell).join(',')+"\r\n"; });
+    S.leaves.forEach(function(l){ csv += [l.date,'إجازة '+NAMES[l.type],l.days+' يوم'].map(csvCell).join(',')+"\r\n"; });
+    S.ot.forEach(function(o){csv += [o.date,'سهر إضافي',o.from+'–'+o.to+' ('+otHours(o)+' ساعة) '+money(otPay(o))].map(csvCell).join(',')+"\r\n";});
+    S.work.forEach(function(w){csv += [w.date,w.kind==='holiday'?'عمل عطلة رسمية':'عمل راحة أسبوعية',money(w.customPay||(w.kind==='holiday'?2*dailyRate():dailyRate()))].map(csvCell).join(',')+"\r\n";});
+    S.shifts.forEach(function(x){csv += [x.date,'وردية '+(x.type==='night'?'ليلية':'وسطى'),x.in+'–'+x.out+' '+money(x.rate)].map(csvCell).join(',')+"\r\n";});
+    S.ramadanAtt.forEach(function(x){csv += [x.date,'دوام رمضان',x.in+'–'+x.out].map(csvCell).join(',')+"\r\n";});
+    S.ramadanOt.forEach(function(x){csv += [x.date,'سهر رمضان',x.from+'–'+x.to+' '+money(x.otRate)].map(csvCell).join(',')+"\r\n";});
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var aLink = document.createElement('a');
+    aLink.href = URL.createObjectURL(blob);
+    aLink.download = 'monzer_app_report_' + ds(new Date()) + '.csv';
+    aLink.click();
+  }
+  else if(a === 'rs'){
+    try {
+      var ob = JSON.parse(V('bkt'));
+      if(!ob || typeof ob !== 'object' || Array.isArray(ob) || !ob.att || typeof ob.att !== 'object') throw 0;
+      S = normalizeState(ob);
+      alert('تم استرجاع البيانات بنجاح ✅');
+    } catch(x) {
+      document.getElementById('bkm').textContent = 'النص المدخل غير صحيح، تأكد من نسخه بالكامل';
+      return;
+    }
+  }
+
+  save();
+  render();
+});
+
+render();
+</script>
+</body>
+</html>
